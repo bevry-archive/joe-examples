@@ -1,0 +1,49 @@
+# 2016 October 27
+# https://github.com/bevry/base
+
+# Use the latest travis infrastructure
+sudo: false
+
+# We use node
+language: node_js
+node_js:
+  - "0.8"   # legacy
+  - "0.10"  # maintenance
+  - "0.12"  # maintenance
+  - "4"     # lts
+  - "6"     # lts
+  - "7"     # stable
+cache:
+  directories:
+    - node_modules
+
+# Ensure dependencies are installed using an LTS node version
+install: >
+  if nvm ls-remote --lts | grep "$(nvm current)"; then
+    npm install
+  else
+    nvm install --lts
+    export LTS_NODE_VERSION="$(nvm current)"
+    npm install
+    nvm use "$TRAVIS_NODE_VERSION"
+  fi
+
+# Ensure compilation and linting occur on an LTS node version
+before_script: >
+  if nvm ls-remote --lts | grep "$(nvm current)"; then
+    echo "running on a LTS node version, compiling and linting"
+    npm run our:compile && npm run our:verify
+  else
+    echo "running on a non-LTS node version, compiling with lts, skipping linting"
+    nvm use "$LTS_NODE_VERSION"
+    npm run our:compile
+    nvm use "$TRAVIS_NODE_VERSION"
+  fi
+
+# Custom notifications
+notifications:
+  slack:
+    secure: rEgSCiKvwhUBVJ53pHHruBFoqxS6g+CDEtKR/dNy4PlTYR1oZQVbefbeFHSlksg15cLDVm6IZtWBhIfrP4uVv4u09TUqvEjUJgxMWAHEHnLXAaCGsf6TDlbRCMDHY0wW6F8l5YNdR+IRpiMZElwbraYKXACV7jtAhLRq0l33WUC9GRfmm78jfCui6PlMcD70oje5uUWaC45tlcA+0VjazNRNMvIJ0OnewjKFaK+/8Igeln3IktN1X7odJDOewqdik6vXVTMuCQX2nMNI8l8wbSMzQLkvje18B+NvCrXrfu682AjiCn9Lq40FcULTayeO/oiebUcXI4INwGSAXBKEOmwHAQgSQ7l4J9jJSNYoWDaRdVDcl4pjInpsY6c/quQS7szyNbUgTiOzlfWdojqwy8luzKn02OBJ0/Ev0HxEJwAHY1cRJcdN9IIu2BfSPbOaLEbM/ib0z2dttaho9xaKyuZF+4+QLs+MZXRtASbRyVrT2+PEyJVDzTQ1kW+hOb3GVbU7rXlyk3BdsbE6YlyR9dv1u3aoR99Jvk1XphNsRNqmCiB5rYJyy3mxAqdYskdQ9BeKdaxsWIEVOq+kFa43QcpfMQ/rxJdXnCyoaeMU87d02pLYMdFlarIZvkX46VFmaYQuqtipAE/rarAF13O4cprFux30AFCpbsYVKS1Uwq4=
+  email:
+    recipients:
+      secure: WlxD0yNjoUiiWgXbBWbn92xFVgpgGKlIYycYJzucBG5NcDv4UAbcF2YYZd+WesZzFgAzeaMtEq3JYwZm7SMArIY7A2oEHcfJGM7KUVLVsLRuIxulLcw2IM6RS5qWNB2x+RGoojnJIoatF1BwCPl4gJmLoR53XyNILxdleBeZHIyleCFGBBhsHT2OYdHGymMQuJDSoytV0lvLj3hpBffkTEtstvJc0klATSKwRZr129Tixh4pwEz83IMoSHxiHn7OXJWvmIbkkwpp42SmaM/SLk8fJ3WUaN1LM/NfnNd+c4YwmRDcSPaK3qqlsYOOlgKno5t3ElpPtO/7lL75xRmgZQD8vMdrpUil1E83KQ5o1dNQwFWgpLSK6pzlJXEfKi4P65cBYKeSiU8dmWVwA8AoDz3yBObU/3xWhea0BHPrBLmVduVd+/bEkA2fTyQY2VIUKUxzR92ZBcx5HoUmJ92Xj3Pr+I1RTSHG2p/nOspsYVje4ve5SE9TtMftxi0p06dc8LzGBAa9AUOYClbuUi52v5z1Qb1uDGBomebVGL/TNp4S2YcKQXyKyziqcMqCsViNjVQDxyNw4mwvUcYudYdkobAe3UO5GhIty+uqK1gqaA+tl8GNZ6RHXvO5Uu2moBU0G/D3swLDz4EVkIpS54rHNyEU3PkWkp4PXRda+Fo1jMg=

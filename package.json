@@ -1,0 +1,95 @@
+{
+  "title": "Joe Examples",
+  "name": "joe-examples",
+  "version": "1.0.0",
+  "description": "Usage examples and tests for testing library/runner joe",
+  "homepage": "https://github.com/bevry/joe-examples",
+  "license": "MIT",
+  "keywords": [
+    "joe",
+    "examples"
+  ],
+  "badges": {
+    "list": [
+      "npmversion",
+      "npmdownloads",
+      "daviddm",
+      "daviddmdev",
+      "---",
+      "slackin",
+      "patreon",
+      "gratipay",
+      "flattr",
+      "paypal",
+      "bitcoin",
+      "wishlist"
+    ],
+    "config": {
+      "patreonUsername": "bevry",
+      "gratipayUsername": "bevry",
+      "flattrUsername": "balupton",
+      "paypalURL": "https://bevry.me/paypal",
+      "bitcoinURL": "https://bevry.me/bitcoin",
+      "wishlistURL": "https://bevry.me/wishlist",
+      "slackinURL": "https://slack.bevry.me"
+    }
+  },
+  "author": "2016+ Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
+  "maintainers": [
+    "Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
+  ],
+  "contributors": [
+    "Benjamin Lupton <b@lupton.cc> (http://balupton.com)"
+  ],
+  "bugs": {
+    "url": "https://github.com/bevry/joe-examples/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bevry/joe-examples.git"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "editions": [
+    {
+      "description": "Source + ES5 + Require",
+      "directory": "lib",
+      "entry": "standard.js",
+      "syntaxes": [
+        "javascript",
+        "es5",
+        "require"
+      ]
+    }
+  ],
+  "main": "lib/standard.js",
+  "browser": "lib/standard.js",
+  "scripts": {
+    "our:clean": "echo 'nothing to clean'",
+    "our:compile": "echo 'nothing to compile'",
+    "our:meta": "npm run our:meta:projectz",
+    "our:meta:projectz": "projectz compile",
+    "our:verify": "npm run our:verify:eslint",
+    "our:verify:eslint": "eslint --fix ./source",
+    "our:test": "npm run our:verify && npm test",
+    "our:release": "npm run our:release:prepare && npm run our:release:publish && npm run our:release:tag && npm run our:release:push",
+    "our:release:prepare": "npm run our:clean && npm run our:compile && npm run our:test && npm run our:meta",
+    "our:release:publish": "npm publish",
+    "our:release:tag": "git tag v$npm_package_version -a",
+    "our:release:push": "git push origin master && git push origin --tags",
+    "test": "echo 'nothing to test, just examples'"
+  },
+  "dependencies": {
+    "assert-helpers": "^4.4.0"
+  },
+  "peerDependencies": {
+    "joe": "*"
+  },
+  "devDependencies": {
+    "joe": "^1.8.0",
+    "joe-reporter-console": "^1.2.1",
+    "eslint": "^3.8.1",
+    "projectz": "^1.3.0"
+  }
+}
