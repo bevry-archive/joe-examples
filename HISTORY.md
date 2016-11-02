@@ -1,5 +1,9 @@
 # History
 
+## v1.1.0 2016 November 2
+- Rewrote example suite and test names for clarification
+- Added multi example
+
 ## v1.0.1 2016 November 1
 - Repackaged
 
