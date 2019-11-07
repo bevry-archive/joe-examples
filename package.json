@@ -89,7 +89,7 @@
   "devDependencies": {
     "joe": "^2.0.0",
     "joe-reporter-console": "^2.0.0",
-    "eslint": "^3.8.1",
+    "eslint": "^6.6.0",
     "projectz": "^1.3.0"
   }
 }
